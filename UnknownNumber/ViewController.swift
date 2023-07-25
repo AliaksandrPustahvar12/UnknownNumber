@@ -34,7 +34,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         titlelabel.textAlignment = .center
         titlelabel.textColor = .systemMint
         titlelabel.font = UIFont.boldSystemFont(ofSize: 18)
-        titlelabel.text = "Let's try to guess a number from 1 ton 100!"
+        titlelabel.text = "Let's try to guess a number from 1 to 100!"
         titlelabel.adjustsFontSizeToFitWidth = true
         view.addSubview(titlelabel)
         

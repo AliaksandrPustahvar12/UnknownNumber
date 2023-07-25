@@ -105,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D472E4B62A6E7D51009EE887 /* Build configuration list for PBXProject "UnknownNumber" */;
+			buildConfigurationList = D472E4B62A6E7D51009EE887 /* Build configuration list for PBXProject "Unknown Number" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -291,6 +291,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7B6YSJUL25;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UnknownNumber/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -318,6 +319,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7B6YSJUL25;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UnknownNumber/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -341,7 +343,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D472E4B62A6E7D51009EE887 /* Build configuration list for PBXProject "UnknownNumber" */ = {
+		D472E4B62A6E7D51009EE887 /* Build configuration list for PBXProject "Unknown Number" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D472E4CD2A6E7D53009EE887 /* Debug */,
