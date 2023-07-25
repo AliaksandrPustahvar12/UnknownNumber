@@ -16,63 +16,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
     private let timerLabel = UILabel()
     private let textTimerLabel = UILabel()
     private let restartButton = UIButton(type: .system)
-    private var randomNumber = 1
-    private var isCancel = false
-    private var timer: Timer?
-    
-    private var cancellables = Set<AnyCancellable>()
-    private var timerCancellables = Set<AnyCancellable>()
-    
+    private let controller = UnknownNumberController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.systemIndigo
         setupView()
         textField.delegate = self
-        createRandomNumber()
+        controller.createRandomNumber()
         setUpToolBar()
-        print(randomNumber)
-        createTextFieldSubscriber()
-        createTimerSubscriber()
-    }
-    
-    private func createTextFieldSubscriber() {
-        NotificationCenter.default
-            .publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .map { ($0.object as? UITextField)?.text }
-            .debounce(for: .seconds(0.8), scheduler: RunLoop.main)
-            .sink { string in
-                let value: Int = Int(string ?? "0") ?? 0
-                switch value {
-                case 0:
-                    self.resultLabel.text = ""
-                case 1..<self.randomNumber:
-                    self.resultLabel.text = "Your number '\(value)' is smaller than Unknown"
-                case self.randomNumber + 1..<101:
-                    self.resultLabel.text = "Your number '\(value)' is bigger than Unknown"
-                default:
-                    self.resultLabel.text = "Congrats! You win! it was '\(value)'"
-                    self.cancellables.removeAll()
-                    self.timerCancellables.removeAll()
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func createTimerSubscriber() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Timer.publish(every: 1.0, on: .main, in: .common)
-                .autoconnect()
-                .scan(0) { counter, _ in
-                    counter + 1
-                }
-                .map { seconds in
-                    self.textTimerLabel.text = "seconds have passed"
-                    return  String(seconds)
-                }
-                .assign(to: \.text, on: self.timerLabel)
-                .store(in: &self.timerCancellables)
-        }
+        controller.createTextFieldSubscriber(textField: textField, resultLabel: resultLabel)
+        controller.createTimerSubscriber(textTimerLabel: textTimerLabel, timerLabel: timerLabel)
     }
     
     private func setupView() {
@@ -125,7 +79,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         restartButton.layer.shadowColor = UIColor.systemMint.withAlphaComponent(0.9).cgColor
         restartButton.layer.shadowOpacity = 5
         restartButton.layer.shadowRadius = 6
-        restartButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        restartButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
         view.addSubview(restartButton)
         
         titlelabel.translatesAutoresizingMaskIntoConstraints = false
@@ -178,22 +132,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
-    private func createRandomNumber() {
-        randomNumber = Int.random(in: 1...100)
-    }
-    
-    @objc func buttonAction() {
-        timerLabel.text = ""
-        textTimerLabel.text = ""
-        self.timerCancellables.removeAll()
-        self.isCancel = false
-        createRandomNumber()
-        resultLabel.text = ""
-        textField.text = ""
-        createTextFieldSubscriber()
-        createTimerSubscriber()
-    }
-    
     private func setUpToolBar() {
         let bar = UIToolbar()
         let dismissButton = UIBarButtonItem(title: "Dismiss keyboard", style: .plain, target: self, action: #selector(dismissKeyboard))
@@ -206,6 +144,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    @objc func restartGame() {
+        controller.buttonAction(resultLabel: resultLabel, timerLabel: timerLabel, textTimerLabel: textTimerLabel, textField: textField)
     }
     
     internal func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
