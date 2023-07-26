@@ -26,11 +26,11 @@ final class UnknownNumberController {
                 case 0:
                     resultLabel.text = ""
                 case 1..<self.randomNumber:
-                    resultLabel.text = "Your number '\(value)' is smaller than Unknown"
+                    resultLabel.text = "Entered number '\(value)' is less than Unknown"
                 case self.randomNumber + 1..<101:
-                    resultLabel.text = "Your number '\(value)' is bigger than Unknown"
+                    resultLabel.text = "Entered number '\(value)' is greater than Unknown"
                 default:
-                    resultLabel.text = "Congrats! You win! it was '\(value)'"
+                    resultLabel.text = "Congrats! You win! It was '\(value)'"
                     self.cancellables.removeAll()
                     self.timerCancellables.removeAll()
                 }
